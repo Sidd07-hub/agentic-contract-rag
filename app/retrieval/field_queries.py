@@ -1,44 +1,103 @@
 """
-Field-specific retrieval queries.
+Semantic retrieval queries.
 
-Maps JSON schema fields to semantic search queries.
+Each schema field is mapped to a natural-language search query that
+helps retrieve the most relevant contract sections before sending
+them to the LLM.
 """
 
 FIELD_QUERIES = {
 
+    # ------------------------------------------------------------------
+    # Contract Information
+    # ------------------------------------------------------------------
+
+    "contract_id":
+        "contract number agreement number master services agreement identifier document reference",
+
     "effective_date":
-        "Find the effective date of the agreement.",
+        "effective date date entered into agreement commencement date execution date",
 
-    "provider":
-        "Find the provider company legal name, address, and organization details.",
+    "term_months":
+        "initial term contract duration agreement period number of months renewal term",
 
-    "client":
-        "Find the client company legal name, address, and organization details.",
 
-    "services":
-        "Find the scope of services and deliverables provided under this agreement.",
+    # ------------------------------------------------------------------
+    # Parties
+    # ------------------------------------------------------------------
+
+    "parties":
+        "provider client parties legal name registered office principal place of business address signatory authorised representative",
+
+
+    # ------------------------------------------------------------------
+    # Fees
+    # ------------------------------------------------------------------
 
     "fees":
-        "Find payment terms, fees, invoices, taxes, milestone payments, and pricing.",
+        "payment fees pricing headline fee total payable reimbursement expenses taxes currency invoice payment schedule",
 
-    "term":
-        "Find the contract duration, renewal terms, and agreement period.",
+
+    # ------------------------------------------------------------------
+    # Deliverables / Milestones
+    # ------------------------------------------------------------------
+
+    "milestones":
+        "deliverables milestones target date payment schedule implementation phases statement of work milestone table",
+
+
+    # ------------------------------------------------------------------
+    # Termination
+    # ------------------------------------------------------------------
 
     "termination":
-        "Find termination clauses including termination for convenience, termination for cause, notice period, and obligations after termination.",
+        "termination notice termination for convenience termination for cause effect of termination notice period thirty sixty days",
+
+
+    # ------------------------------------------------------------------
+    # Confidentiality
+    # ------------------------------------------------------------------
 
     "confidentiality":
-        "Find confidentiality obligations and confidential information clauses.",
+        "confidential information confidentiality obligations non disclosure confidentiality period",
 
-    "intellectual_property":
-        "Find ownership of intellectual property, deliverables, licensing, and pre-existing IP.",
+
+    # ------------------------------------------------------------------
+    # Liability
+    # ------------------------------------------------------------------
 
     "liability":
-        "Find limitation of liability, indemnification, exclusions, and liability caps.",
+        "limitation of liability damages liability cap indirect damages consequential damages",
+
+
+    # ------------------------------------------------------------------
+    # Governing Law
+    # ------------------------------------------------------------------
 
     "governing_law":
-        "Find governing law, jurisdiction, arbitration, and dispute resolution.",
+        "governing law jurisdiction arbitration dispute resolution applicable law",
+
+
+    # ------------------------------------------------------------------
+    # Intellectual Property
+    # ------------------------------------------------------------------
+
+    "intellectual_property":
+        "intellectual property ownership deliverables client materials provider pre existing intellectual property",
+
+
+    # ------------------------------------------------------------------
+    # SLA
+    # ------------------------------------------------------------------
 
     "sla":
-        "Find service levels, response times, resolution targets, and service credits."
+        "service level agreement response time resolution time severity schedule b",
+
+
+    # ------------------------------------------------------------------
+    # Validation (placeholder)
+    # ------------------------------------------------------------------
+
+    "validation_notes":
+        "entire contract"
 }

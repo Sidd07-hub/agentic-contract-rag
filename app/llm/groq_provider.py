@@ -4,8 +4,9 @@ Groq LLM provider.
 
 from groq import Groq
 
-from app.config import settings
+from app.config import GROQ_API_KEY, GROQ_MODEL
 from app.llm.base import BaseLLM
+from app.prompts.extraction_prompt import SYSTEM_PROMPT
 from app.utils.logger import setup_logger
 
 logger = setup_logger(__name__)
@@ -17,15 +18,23 @@ class GroqProvider(BaseLLM):
     """
 
     def __init__(self) -> None:
+        """
+        Initialize the Groq client.
+        """
+
+        if not GROQ_API_KEY:
+            raise ValueError(
+                "GROQ_API_KEY not found in environment variables."
+            )
 
         self.client = Groq(
-            api_key=settings.GROQ_API_KEY
+            api_key=GROQ_API_KEY,
         )
 
-        self.model = settings.GROQ_MODEL
+        self.model = GROQ_MODEL
 
         logger.info(
-            f"Loaded Groq model: {self.model}"
+            f"Initialized Groq model: {self.model}"
         )
 
     def generate(
@@ -33,6 +42,19 @@ class GroqProvider(BaseLLM):
         prompt: str,
         temperature: float = 0.0,
     ) -> str:
+        """
+        Generate a response from Groq.
+
+        Args:
+            prompt:
+                User prompt.
+
+            temperature:
+                Sampling temperature.
+
+        Returns:
+            Model response text.
+        """
 
         try:
 
@@ -42,14 +64,14 @@ class GroqProvider(BaseLLM):
 
                 temperature=temperature,
 
+                response_format={
+                    "type": "json_object"
+                },
+
                 messages=[
                     {
                         "role": "system",
-                        "content": (
-                            "You are an expert legal AI assistant. "
-                            "Return only accurate information extracted "
-                            "from the supplied contract."
-                        ),
+                        "content": SYSTEM_PROMPT,
                     },
                     {
                         "role": "user",
@@ -58,12 +80,21 @@ class GroqProvider(BaseLLM):
                 ],
             )
 
-            return response.choices[0].message.content.strip()
+            content = response.choices[0].message.content
+
+            if content is None:
+                raise RuntimeError(
+                    "Groq returned an empty response."
+                )
+
+            return content.strip()
 
         except Exception as error:
 
-            logger.exception("Groq request failed.")
+            logger.exception(
+                "Groq generation failed."
+            )
 
             raise RuntimeError(
-                "Failed to generate response from Groq."
+                "Unable to generate LLM response."
             ) from error

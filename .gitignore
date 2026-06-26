@@ -15,16 +15,17 @@ __pycache__/
 # Logs
 *.log
 
-# Output Files
+# Generated Output
 data/output/
 
-# Vector Database
+# FAISS Vector Store
 data/vector_db/
 
-# Confidential Contract PDFs
+# Challenge Assets (Do not upload)
 data/contracts/*.pdf
+data/schema/*.json
 
-# Local Model Cache
+# Local Hugging Face Cache (optional)
 .cache/
 
 # Test Cache

@@ -42,16 +42,35 @@ class Retriever:
     ) -> list[tuple[VectorDocument, float]]:
         """
         Retrieve the most relevant chunks for a schema field.
+
+        Resolution order:
+
+        1. Full field path
+        fees.headline_fee
+
+        2. Parent path
+        fees
+
+        3. Raise error if nothing exists.
         """
 
-        if field_name not in FIELD_QUERIES:
+        query = FIELD_QUERIES.get(field_name)
+
+        if query is None:
+
+            parent = field_name.split(".")[0]
+
+            query = FIELD_QUERIES.get(parent)
+
+        if query is None:
+
             raise ValueError(
                 f"No retrieval query defined for '{field_name}'."
             )
 
-        query = FIELD_QUERIES[field_name]
-
-        logger.info(f"Searching field: {field_name}")
+        logger.info(
+            f"Searching field: {field_name}"
+        )
 
         query_embedding = self.embedding_model.embed_text(query)
 
