@@ -1,0 +1,35 @@
+# Virtual Environment
+venv/
+.venv/
+
+# Environment Variables
+.env
+
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# IDE
+.vscode/
+
+# Logs
+*.log
+
+# Output Files
+data/output/
+
+# Vector Database
+data/vector_db/
+
+# Confidential Contract PDFs
+data/contracts/*.pdf
+
+# Local Model Cache
+.cache/
+
+# Test Cache
+.pytest_cache/
+
+# OS Files
+.DS_Store
+Thumbs.db
