@@ -2,6 +2,7 @@ from pathlib import Path
 
 import typer
 
+from app.ingestion.document_builder import DocumentBuilder
 from app.ingestion.pdf_parser import PDFParser
 from app.ingestion.table_parser import TableParser
 
@@ -16,30 +17,36 @@ def main(
         "-p",
         exists=True,
         readable=True,
-        help="Path to the input contract PDF."
+        help="Path to the input contract PDF.",
     )
 ):
 
-    parser = PDFParser(pdf)
-    pages = parser.extract_text()
+    pages = PDFParser(pdf).extract_text()
+    tables = TableParser(pdf).extract_tables()
 
-    table_parser = TableParser(pdf)
-    tables = table_parser.extract_tables()
+    document = DocumentBuilder.build(
+        pages,
+        tables,
+    )
 
     print("\n")
     print("=" * 80)
-    print("TABLE SUMMARY")
+    print("DOCUMENT SUMMARY")
     print("=" * 80)
 
-    print(f"Pages : {len(pages)}")
-    print(f"Tables: {len(tables)}")
+    print(f"Pages : {len(document)}")
 
-    for table in tables:
+    total_tables = sum(
+        len(page["tables"])
+        for page in document
+    )
 
+    print(f"Tables: {total_tables}")
+
+    for page in document:
         print(
-            f"\nPage {table['page']} | "
-            f"Table {table['table_index']} | "
-            f"Rows: {len(table['rows'])}"
+            f"Page {page['page']} | "
+            f"Tables: {len(page['tables'])}"
         )
 
 
