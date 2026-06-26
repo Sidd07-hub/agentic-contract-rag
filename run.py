@@ -2,6 +2,7 @@ from pathlib import Path
 
 import typer
 
+from app.chunking.semantic_chunker import SemanticChunker
 from app.ingestion.document_builder import DocumentBuilder
 from app.ingestion.pdf_parser import PDFParser
 from app.ingestion.table_parser import TableParser
@@ -17,11 +18,11 @@ def main(
         "-p",
         exists=True,
         readable=True,
-        help="Path to the input contract PDF.",
     )
 ):
 
     pages = PDFParser(pdf).extract_text()
+
     tables = TableParser(pdf).extract_tables()
 
     document = DocumentBuilder.build(
@@ -29,25 +30,30 @@ def main(
         tables,
     )
 
+    chunker = SemanticChunker()
+
+    chunks = chunker.chunk_document(document)
+
     print("\n")
     print("=" * 80)
-    print("DOCUMENT SUMMARY")
+    print("CHUNK SUMMARY")
     print("=" * 80)
 
-    print(f"Pages : {len(document)}")
+    print(f"Total Chunks : {len(chunks)}")
 
-    total_tables = sum(
-        len(page["tables"])
-        for page in document
-    )
+    for chunk in chunks:
 
-    print(f"Tables: {total_tables}")
+        print()
 
-    for page in document:
-        print(
-            f"Page {page['page']} | "
-            f"Tables: {len(page['tables'])}"
-        )
+        print(chunk.metadata.chunk_id)
+
+        print(chunk.metadata.title)
+
+        print(f"Pages : {chunk.metadata.pages}")
+
+        print(f"Tables: {chunk.metadata.table_count}")
+
+        print("-" * 80)
 
 
 if __name__ == "__main__":
