@@ -1,9 +1,9 @@
 from pathlib import Path
-from typing import Optional
 
 import typer
 
 from app.ingestion.pdf_parser import PDFParser
+from app.ingestion.table_parser import TableParser
 
 app = typer.Typer()
 
@@ -14,26 +14,33 @@ def main(
         ...,
         "--pdf",
         "-p",
-        help="Path to the input contract PDF.",
         exists=True,
-        file_okay=True,
-        dir_okay=False,
         readable=True,
+        help="Path to the input contract PDF."
     )
 ):
-    """
-    Parse a contract PDF and extract its contents.
-    """
 
     parser = PDFParser(pdf)
-
     pages = parser.extract_text()
 
-    for page in pages:
-        print("=" * 80)
-        print(f"PAGE {page['page']}")
-        print("=" * 80)
-        print(page["text"][:500])
+    table_parser = TableParser(pdf)
+    tables = table_parser.extract_tables()
+
+    print("\n")
+    print("=" * 80)
+    print("TABLE SUMMARY")
+    print("=" * 80)
+
+    print(f"Pages : {len(pages)}")
+    print(f"Tables: {len(tables)}")
+
+    for table in tables:
+
+        print(
+            f"\nPage {table['page']} | "
+            f"Table {table['table_index']} | "
+            f"Rows: {len(table['rows'])}"
+        )
 
 
 if __name__ == "__main__":
