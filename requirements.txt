@@ -19,3 +19,5 @@ typer
 pytest
 
 ollama
+
+groq>=0.30.0
