@@ -27,3 +27,23 @@ class BaseLLM(ABC):
             Model response as plain text.
         """
         raise NotImplementedError
+
+    @abstractmethod
+    def generate_with_system(
+        self,
+        prompt: str,
+        system_prompt: str,
+        temperature: float = 0.0,
+    ) -> str:
+        """
+        Generate a response using a custom system prompt.
+
+        Args:
+            prompt: User prompt sent to the model.
+            system_prompt: Custom system-level instructions.
+            temperature: Sampling temperature.
+
+        Returns:
+            Model response as plain text.
+        """
+        raise NotImplementedError

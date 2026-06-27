@@ -65,6 +65,8 @@ class ExtractionAgent:
                 "",
             )
 
+            field_schema = field.get("schema")
+
             logger.info(
                 f"Extracting field: {path}"
             )
@@ -74,6 +76,7 @@ class ExtractionAgent:
                 value = self._extract_single_field(
                     path,
                     description,
+                    field_schema,
                 )
 
                 self._insert_value(
@@ -102,6 +105,7 @@ class ExtractionAgent:
         self,
         path: str,
         description: str,
+        field_schema: dict[str, Any] | None = None,
     ) -> Any:
         """
         Retrieve context and extract a single schema field.
@@ -125,6 +129,7 @@ class ExtractionAgent:
             field_name=path,
             field_description=description,
             context=context,
+            field_schema=field_schema,
         )
 
         response = self.llm.generate(

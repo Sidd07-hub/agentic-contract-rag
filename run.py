@@ -17,7 +17,7 @@ from app.embeddings.embedding_model import EmbeddingModel
 from app.ingestion.document_builder import DocumentBuilder
 from app.ingestion.pdf_parser import PDFParser
 from app.ingestion.table_parser import TableParser
-from app.llm.groq_provider import GroqProvider
+from app.llm import get_llm_provider
 from app.retrieval.retriever import Retriever
 from app.schemas import schema_loader
 from app.schemas.schema_loader import SchemaLoader
@@ -126,7 +126,7 @@ def main(
     # 7. LLM
     # --------------------------------------------------
 
-    llm = GroqProvider()
+    llm = get_llm_provider()
 
     # --------------------------------------------------
     # 8. Extraction
@@ -143,8 +143,15 @@ def main(
     # 9. Validation
     # --------------------------------------------------
 
+    # Build full document text for the LLM validator
+    full_document_text = "\n\n".join(
+        page["text"] for page in document
+    )
+
     validator = ValidatorAgent(
-        schema_loader.get_schema()
+        schema_loader.get_schema(),
+        llm,
+        full_document_text,
     )
 
     validated = validator.validate(extracted)
@@ -187,7 +194,7 @@ def main(
     print(f"Embedding Shape : {embeddings.shape}")
     print(f"Output          : {output_path}")
 
-    print("\nDone ✅")
+    print("\nDone!")
 
 
 if __name__ == "__main__":

@@ -54,7 +54,7 @@ The pipeline performs:
           Prompt Construction
                         │
                         ▼
-      Groq (Llama 3.3 70B Versatile)
+      GitHub Models (GPT-4o)
                         │
                         ▼
              Extraction Agent
@@ -90,8 +90,8 @@ The pipeline performs:
 
 ### AI & LLM
 
-* Groq API
-* Llama 3.3 70B Versatile
+* GitHub Models API
+* GPT-4o
 
 ### Embeddings
 
@@ -170,8 +170,8 @@ pip install -r requirements.txt
 Create a `.env` file in the project root.
 
 ```env
-GROQ_API_KEY=your_groq_api_key
-GROQ_MODEL=llama-3.3-70b-versatile
+LLM_PROVIDER=openai
+GITHUB_TOKEN=your_github_pat_here
 ```
 
 ---

@@ -1,0 +1,142 @@
+{
+    "contract_id": null,
+    "parties": {
+        "provider": {
+            "legal_name": "CLOUDWAYZ SOLUTIONS LLP",
+            "address": "4th Floor, Tech Park One, Pune – 411006, Maharashtra, India",
+            "signatory_name": null,
+            "signatory_title": "Designated Partner"
+        },
+        "client": {
+            "legal_name": "NORDHAVEN ANALYTICS INC.",
+            "address": "200 Park Avenue, Suite 1400, New York, NY 10166",
+            "signatory_name": "Siddhartha Patil",
+            "signatory_title": "Designated Partner"
+        }
+    },
+    "effective_date": "2026-05-15",
+    "term_months": 24,
+    "fees": {
+        "headline_fee": 75000,
+        "total_payable": 82500,
+        "currency": "USD",
+        "reimbursement_cap": {
+            "amount": 500000,
+            "currency": null,
+            "period": null
+        }
+    },
+    "milestones": [
+        {
+            "milestone_id": "M1",
+            "deliverable": "Discovery & Assessment Report: inventory of on-prem workloads, dependency map, target AWS architecture diagram, risk register",
+            "target_date": "2026-05-06",
+            "fee_percent_released": 20
+        },
+        {
+            "milestone_id": "M2",
+            "deliverable": "Landing Zone & Networking Setup: AWS Organisations, VPCs, Transit Gateway, IAM baseline, Control Tower guardrails",
+            "target_date": "2026-06-05",
+            "fee_percent_released": 25
+        },
+        {
+            "milestone_id": "M3",
+            "deliverable": "Migration Wave 1 (covers two sub-deliverables, see below): (a) Data warehouse migration to Amazon Redshift, including schema conversion and historical data backfill; (b) Migration of three (3) tier-1 analytical workloads to Amazon EMR with cutover runbook",
+            "target_date": null,
+            "fee_percent_released": 30
+        },
+        {
+            "milestone_id": "M4",
+            "deliverable": "Managed Services Handover: runbooks, SOPs, on-call rotation setup, CloudWatch dashboards, monthly reporting cadence established",
+            "target_date": "2026-10-15",
+            "fee_percent_released": 15
+        },
+        {
+            "milestone_id": "M5",
+            "deliverable": "Final Acceptance: 30-day stabilisation period complete, all open Severity-1 and Severity-2 issues resolved or waived in writing",
+            "target_date": null,
+            "fee_percent_released": 10
+        }
+    ],
+    "termination": {
+        "notice_days_general": 30,
+        "notice_days_managed_services": 60
+    },
+    "validation_notes": [
+        {
+            "field": "contract_id",
+            "issue": "None is not of type 'string'",
+            "severity": "high"
+        },
+        {
+            "field": "fees.reimbursement_cap.currency",
+            "issue": "None is not of type 'string'",
+            "severity": "high"
+        },
+        {
+            "field": "fees.reimbursement_cap.period",
+            "issue": "None is not of type 'string'",
+            "severity": "high"
+        },
+        {
+            "field": "parties.provider.signatory_name",
+            "issue": "None is not of type 'string'",
+            "severity": "high"
+        },
+        {
+            "field": "contract_id",
+            "issue": "Value could not be extracted from the contract.",
+            "severity": "medium"
+        },
+        {
+            "field": "parties.provider.signatory_name",
+            "issue": "Value could not be extracted from the contract.",
+            "severity": "medium"
+        },
+        {
+            "field": "fees.reimbursement_cap.currency",
+            "issue": "Value could not be extracted from the contract.",
+            "severity": "medium"
+        },
+        {
+            "field": "fees.reimbursement_cap.period",
+            "issue": "Value could not be extracted from the contract.",
+            "severity": "medium"
+        },
+        {
+            "field": "milestones[2].target_date",
+            "issue": "Value could not be extracted from the contract.",
+            "severity": "medium"
+        },
+        {
+            "field": "milestones[4].target_date",
+            "issue": "Value could not be extracted from the contract.",
+            "severity": "medium"
+        },
+        {
+            "field": "parties.client.signatory_title",
+            "issue": "Signatory title is 'Designated Partner' in the extracted data but 'Chief Operating Officer (COO)' in the contract.",
+            "severity": "high"
+        },
+        {
+            "field": "milestones.0.target_date",
+            "issue": "Target date for M1 is '05/06/2026' in the contract but extracted as '2026-05-06'.",
+            "severity": "low"
+        },
+        {
+            "field": "milestones.2.target_date",
+            "issue": "Target date for M3 is '30 August 2026' in the contract but extracted as null.",
+            "severity": "medium"
+        },
+        {
+            "field": "milestones.4.target_date",
+            "issue": "Target date for M4 is '15-Oct-2026' in the contract but extracted as '2026-10-15'.",
+            "severity": "low"
+        },
+        {
+            "field": "milestones.5.target_date",
+            "issue": "Target date for M5 is 'To be determined' in the contract but extracted as null.",
+            "severity": "medium"
+        }
+    ]
+}

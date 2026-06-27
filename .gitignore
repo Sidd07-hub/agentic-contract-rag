@@ -12,11 +12,12 @@ __pycache__/
 # IDE
 .vscode/
 
-# Generated Output
-data/output/
-
 # Logs
 *.log
+
+# Generated Output
+data/output/*
+!data/output/output.json
 
 # FAISS Vector Store
 data/vector_db/
